@@ -8,14 +8,13 @@ output:
   lightbox: true
   gallery: false
   highlight: tango
-author: "Annie Edwards"
+author: "Annie Edwards, annieedwards2025@u.northwestern.edu"
 date: "Presented: Thursday, 12 December 2024; 08:30 - 12:20"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 ```{r install libraries, include=FALSE, warning=FALSE}
 library(tidyverse)
@@ -59,6 +58,7 @@ CN_long <- CN_long %>%
 ```
 
 # Methods
+
 ### Re-arranging the mixing equations to determine $\delta^13\textrm{C}$ of the reactive and unreactive input components
 
 Begin with a two-component mixture (the reactive and unreactive components of organic C) applied to the standard mass-balance equations:
@@ -68,15 +68,13 @@ $$
 \delta^{13}\textrm{C}_{ \textrm{floodplain}}\cdot\textrm{ %C}_\textrm{floodplain}&=\delta^{13}\textrm{C}_{ \textrm{reactive}}\cdot\textrm{ %C}_\textrm{reactive}+\delta^{13}\textrm{C}_{ \textrm{unreactive}}\cdot\textrm{ %C}_\textrm{unreactive} \tag{1}\\
 \textrm{ %C}_\textrm{floodplain}&=\textrm{ %C}_\textrm{reactive}+\textrm{ %C}_\textrm{unreactive}\tag{2}\\
 \end{align}
-$$
-which can be combined and re-arranged into
+$$ which can be combined and re-arranged into
 
 $$
 \begin{align}
 \delta^{13}\textrm{C}_{ \textrm{f}}\cdot\textrm{ %C}_\textrm{f}&=\delta^{13}\textrm{C}_{ \textrm{r}}\cdot\textrm{ %C}_\textrm{f}+\textrm{ %C}_\textrm{r}(\delta^{13}\textrm{C}_{ \textrm{u}}-\delta^{13}\textrm{C}_{ \textrm{r}}) \tag{3}\\
 \end{align}
-$$
-By plotting $\delta^13\textrm{C}_\textrm{f}\cdot \textrm{ %C}_\textrm{f}$ as a function of $\textrm{ %C}_\textrm{f}$, the linear relationship has slope $\delta^13\textrm{C}_\textrm{r}$, and the intercept can be solved for $\delta^13\textrm{C}_\textrm{u}$
+$$ By plotting $\delta^13\textrm{C}_\textrm{f}\cdot \textrm{ %C}_\textrm{f}$ as a function of $\textrm{ %C}_\textrm{f}$, the linear relationship has slope $\delta^13\textrm{C}_\textrm{r}$, and the intercept can be solved for $\delta^13\textrm{C}_\textrm{u}$
 
 Note: since the x and y of the graph are dependent on each other, this equation only works because we are confident that we see a clear two end-member mixing realtionship between $\delta^{13}\textrm{C}$ and $\textrm{ %C}$ through other means of validation.
 
@@ -90,11 +88,12 @@ $$
 \textrm{C}_\textrm{reactive burial flux}&=\textrm{C}_\textrm{burial flux}\cdot\textrm{f}_\textrm{reactive}\tag{6}\\
 \textrm{C}_{ \textrm{unreactive burial flux}}&=\textrm{C}_\textrm{buried}\cdot (1-\textrm{f}_\textrm{reactive})\tag{7}
 \end{align}
-$$
-which evaluate the the rate of change of the reactive and unreactive components with depth, given a known accumulation rate which was calculated with fly ash geochronology.
+$$ which evaluate the the rate of change of the reactive and unreactive components with depth, given a known accumulation rate which was calculated with fly ash geochronology.
 
 # Results
-### Organic carbon (OC) burial post European settlement 
+
+### Organic carbon (OC) burial post European settlement
+
 ```{r facet plot, echo=FALSE, warning=FALSE, messages=FALSE}
 facettheme <- theme(panel.background = element_rect(fill='#F7F7F7', color='#F7F7F7'),
                       panel.grid = element_blank(), 
@@ -162,8 +161,7 @@ d13C_OC_long %>%
 
 **Figure 3.** %OC variation with depth for the 5 cores collected along the transect (see Fig. 1). The percent of persistent OC since industrialization in the Midwest is noted except core 1, for which the point falls below analysis range. **Only 17% - 41% of OC has persisted.**
 
-This indicates that there is some fraction of C likely being oxidized back into the atmosphere, while some fraction is buried long term (>100 years).
-
+This indicates that there is some fraction of C likely being oxidized back into the atmosphere, while some fraction is buried long term (\>100 years).
 
 ```{r contour plot, echo=FALSE, warning=FALSE, messages=FALSE}
 contourtheme <- theme(panel.background=element_rect(fill='#F7F7F7'),
@@ -229,31 +227,30 @@ knitr::kable(geochronology2,
              col.name=c('Core ID', 'Unreactive d13C', 'Reactive d13C'))
 ```
 
-The floodplain is located near intensively managed land. Upstream agriculture has included row-crop (corn-soybean, among others) rotations for at least the past 150 years, that have likely entered the alluvial system. Corn, a $\textrm{C}_4$ plant is isotopically distinct, with $\delta^{13}\textrm{C} \approx -10 \textrm{ to } -13‰$. **Unreactive C inputs are consistent with an alluvial mixture of $\textrm{C}_3+\textrm{C}_4$ OC.**
+The floodplain is located near intensively managed land. Upstream agriculture has included row-crop (corn-soybean, among others) rotations for at least the past 150 years, that have likely entered the alluvial system. Corn, a $\textrm{C}_4$ plant is isotopically distinct, with $\delta^{13}\textrm{C} \approx -10 \textrm{ to } -13‰$. **Unreactive C inputs are consistent with an alluvial mixture of** $\textrm{C}_3+\textrm{C}_4$ OC.
 
-On the other hand, the old-growth forest located above the floodplain is dominated by $\textrm{C}_3$ plant sources, with $\delta^{13}\textrm{C} \approx -25 \textrm{ to } -35 ‰$. **Reactive C inputs are consistent with local ecosystem $\textrm{C}_3$ OC.**
+On the other hand, the old-growth forest located above the floodplain is dominated by $\textrm{C}_3$ plant sources, with $\delta^{13}\textrm{C} \approx -25 \textrm{ to } -35 ‰$. **Reactive C inputs are consistent with local ecosystem** $\textrm{C}_3$ OC.
 
 ### Carbon budgets for all cores in the floodplain
 
 #### Core01C
 
-
-![Figure 5](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core01C.png)
+![Figure 5](C:\Users\annie\OneDrive%20-%20Northwestern%20University\AP%20Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core01C.png)
 
 #### Core05C
 
-![Figure 6](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core05C.png)
+![Figure 6](C:\Users\annie\OneDrive%20-%20Northwestern%20University\AP%20Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core05C.png)
 
 #### Core07C
 
-![Figure 7](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core07C.png)
+![Figure 7](C:\Users\annie\OneDrive%20-%20Northwestern%20University\AP%20Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core07C.png)
 
 #### Core09C
 
-![Figure 8](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core09C.png)
+![Figure 8](C:\Users\annie\OneDrive%20-%20Northwestern%20University\AP%20Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core09C.png)
 
 #### Core11C
 
-![Figure 9](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core11C.png)
+![Figure 9](C:\Users\annie\OneDrive%20-%20Northwestern%20University\AP%20Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core11C.png)
 
 **Figures 5-9.** Modelled OC flux for all 5 floodplain cores with alluvial and ecosystem inputs, demonstrating the **preferential oxidation of the more reactive C from the local ecosystem, and subsequent long-term burial of unreactive, alluvially inputted OC.**
