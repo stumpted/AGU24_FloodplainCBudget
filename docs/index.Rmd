@@ -1,6 +1,13 @@
 ---
-title: "AGU24 Supplementary Materials"
-output: html_document
+title: "Soil particulate organic C inputs and burial in a Midwest USA floodplain in the watershed of an intensively managed landscape"
+subtitle: "AGU Abstract #: EP41D-1239"
+output: 
+  rmdformats::downcute:
+  self_contained: true
+  thumbnails: true
+  lightbox: true
+  gallery: false
+  highlight: tango
 author: "Annie Edwards"
 date: "Presented: Thursday, 12 December 2024; 08:30 - 12:20"
 ---
@@ -16,6 +23,7 @@ library(readxl)
 library("here")
 library(ggnewscale)
 library(shades)
+library(rmdformats)
 ```
 
 ```{r import dataframes, include=FALSE}
@@ -26,6 +34,8 @@ d13C <- read_excel(here("EA-IRMS","summaries", sheet), 2)
 d15N <- read_excel(here("EA-IRMS","summaries", sheet), 3)
 OC <- read_excel(here("EA-IRMS","summaries", sheet), 4)
 CN <- read_excel(here("EA-IRMS","summaries", sheet), 5)
+
+geochronology <- read_excel(here("geochronology","geochronology_summary.xlsx" ))
 
 ```
 
@@ -48,9 +58,117 @@ CN_long <- CN_long %>%
   inner_join(stream_distance, by = "name")
 ```
 
+# Methods
+### Re-arranging the mixing equations to determine $\delta^13\textrm{C}$ of the reactive and unreactive input components
+
+Begin with a two-component mixture (the reactive and unreactive components of organic C) applied to the standard mass-balance equations:
+
+$$
+\begin{align}
+\delta^{13}\textrm{C}_{\textrm{floodplain}}\cdot\textrm{%C}_\textrm{floodplain}&=\delta^{13}\textrm{C}_{\textrm{reactive}}\cdot\textrm{%C}_\textrm{reactive}+\delta^{13}\textrm{C}_{\textrm{unreactive}}\cdot\textrm{%C}_\textrm{unreactive} \tag{1}\\
+\textrm{%C}_\textrm{floodplain}&=\textrm{%C}_\textrm{reactive}+\textrm{%C}_\textrm{unreactive}\tag{2}\\
+\end{align}
+$$
+which can be combined and re-arranged into
+
+$$
+\begin{align}
+\delta^{13}\textrm{C}_{\textrm{f}}\cdot\textrm{%C}_\textrm{f}&=\delta^{13}\textrm{C}_{\textrm{r}}\cdot\textrm{%C}_\textrm{f}+\textrm{%C}_\textrm{r}(\delta^{13}\textrm{C}_{\textrm{u}}-\delta^{13}\textrm{C}_{\textrm{r}}) \tag{3}\\
+\end{align}
+$$
+By plotting $\delta^13\textrm{C}_\textrm{f}\cdot \textrm{%C}_\textrm{f}$ as a function of $\textrm{%C}_\textrm{f}$, the linear relationship has slope $\delta^13\textrm{C}_\textrm{r}$, and the intercept can be solved for $\delta^13\textrm{C}_\textrm{u}$
+
+Note: since the x and y of the graph are dependent on each other, this equation only works because we are confident that we see a clear two end-member mixing realtionship between $\delta^{13}\textrm{C}$ and $\textrm{%C}$ through other means of validation.
+
+### C-Burial Flux Calculations
+
+C-burial flux calculations were determined with the following equations:
+
+$$
+\begin{align}
+\textrm{f}_\textrm{reactive}&=\frac{\delta^{13}\textrm{C}_{\textrm{f}}-\delta^{13}\textrm{C}_{\textrm{u}}}{\delta^{13}\textrm{C}_{\textrm{r}}-\delta^{13}\textrm{C}_{\textrm{u}}} \tag{5}\\
+\textrm{C}_\textrm{reactive burial flux}&=\textrm{C}_\textrm{burial flux}\cdot\textrm{f}_\textrm{reactive}\tag{6}\\
+\textrm{C}_{\textrm{unreactive burial flux}}&=\textrm{C}_\textrm{buried}\cdot (1-\textrm{f}_\textrm{reactive})\tag{7}
+\end{align}
+$$
+which evaluate the the rate of change of the reactive and unreactive components with depth, given a known accumulation rate which was calculated with fly ash geochronology.
+
+# Results
+### Organic carbon (OC) burial post European settlement 
+```{r facet plot, echo=FALSE, warning=FALSE, messages=FALSE}
+facettheme <- theme(panel.background = element_rect(fill='#F7F7F7', color='#F7F7F7'),
+                      panel.grid = element_blank(), 
+                      axis.line=element_line(size = 1, colour = "black"),
+                      axis.ticks=element_line(size = 1, colour = "black"),
+                      axis.text=element_text(color = "black", size = 10),
+                      axis.title=element_text(color="black"),
+                      rect = element_rect(fill = "transparent"),
+                    plot.background=element_rect(fill='#F7F7F7'),
+                    legend.text = element_text(size=10),
+                    legend.key.size = unit(0.2, 'cm'))
+
+OC_long_Core01 <- subset(OC_long, name == "Core01")
+
+OC_long_PSA <- subset(OC_long, depth_midpt == PSA_depth+2.5 & name != 'core01C')
+OC_long_PSA$line_depth <- 'Post-settlement alluvium'
+
+depth_midpt <- 117.5
+name <- 'core01C'
+value <- 1.085653
+PSA_depth <- 115
+
+OC_long_PSA_core01 <- data_frame(depth_midpt, name, value, PSA_depth)
+
+depth_midpt <- 117.5
+name <- 'core01C'
+value <- 1.085653
+PSA_depth <- 115
+OC_long_PSA_core01 <- data.frame(depth_midpt, name, value, PSA_depth)
+OC_long_PSA_core01$line_depth <- '1 m'
+
+
+OC_long_1m <- subset(OC_long, depth_midpt == 102.5)
+
+d13C_OC_long <- d13C_long %>% 
+  inner_join(OC_long, by = join_by("name", "depth_midpt"))
+
+names(d13C_OC_long)[names(d13C_OC_long) == "value.x"] <- "d13C"
+names(d13C_OC_long)[names(d13C_OC_long) == "value.y"] <- "OC"
+
+d13C_OC_long %>%
+  ggplot(., aes(y=OC, x=depth_midpt)) +
+  geom_area(fill = '#28BBECFF', color = '#006C99') +
+  geom_vline(aes(xintercept=PSA_depth.x, color = 'Post-settlement alluvium'), key_glyph = "path", linetype="dashed") +
+  geom_vline(data = OC_long_PSA_core01, aes(xintercept=100, color = '1 m'), key_glyph = "path", linetype="dashed") +
+  scale_x_reverse() +
+  labs(y = "%OC", x = "Depth (cm)") +
+  facet_wrap(~name, nrow = 1, strip.position="bottom") +
+  scale_y_continuous(position="right") +
+  geom_point(data = OC_long_PSA, aes(y=value, x=depth_midpt - 2.5, color = 'Post-settlement alluvium')) +
+  geom_text(data = OC_long_PSA, nudge_x= 6, nudge_y = 2.2, color = 'black',
+            aes(y=value, x=depth_midpt-2.5, label = c("32%",	"31%",	"17%",	"41%"))) +
+  geom_point(data = OC_long_PSA_core01, aes(y=value, x=100, color='1 m')) +
+  geom_text(data = OC_long_PSA_core01, nudge_x= 6, nudge_y = 2.2, color = 'black',
+          aes(y=value, x=100, label = "17%")) +
+  scale_color_manual(
+  name = 'Burial Line',
+  labels = c('Post-settlement\n alluvium', '1 m'),
+  breaks = c('Post-settlement alluvium', '1 m'),
+  values = c('Post-settlement alluvium'='#8C0902','1 m'='#006C99')) +
+  guides(color = guide_legend(override.aes=list(pch = NA, size = 5))) +
+  facettheme +
+  coord_flip() 
+```
+
+**Figure 3.** %OC variation with depth for the 5 cores collected along the transect (see Fig. 1). The percent of persistent OC since industrialization in the Midwest is noted except core 1, for which the point falls below analysis range. **Only 17% - 41% of OC has persisted.**
+
+This indicates that there is some fraction of C likely being oxidized back into the atmosphere, while some fraction is buried long term (>100 years).
+
+
 ```{r contour plot, echo=FALSE, warning=FALSE, messages=FALSE}
-contourtheme <- theme(panel.background=element_blank(),
+contourtheme <- theme(panel.background=element_rect(fill='#F7F7F7'),
                       panel.grid=element_blank(), 
+                      panel.border=element_rect(color ='#F7F7F7'),
                       axis.line=element_line(size = 1, 
                                              colour = "black"),
                       axis.ticks=element_line(size = 1, 
@@ -61,7 +179,7 @@ contourtheme <- theme(panel.background=element_blank(),
                       rect=element_rect(fill = "transparent"),
                       strip.background=element_blank(),
                       strip.text=element_blank(),
-                      plot.background=element_blank(),
+                      plot.background=element_rect(fill='#F7F7F7'),
                       axis.line.x.bottom=element_blank(),
                       axis.text.x.bottom=element_text(color = "black", 
                                                       size = 10, angle = 45, 
@@ -96,3 +214,46 @@ suppressMessages(
                          )
 )
 ```
+
+**Figure 4.** $\delta^{13}\textrm{C}$ variation with depth and distance from the river channel. **The change in isotopic values with depth indicates a change in source mixture.** There are more and less reactive components to the OC deposited to the floodplain.
+
+We assume that most of the isotopic fractionation in the particulate organic carbon (POC) occurred before deposition. The clear negative isotopic trend with depth indicates that there may be at least two sources contributing to the POC in the floodplain.
+
+### $\delta^{13}\textrm{C}$ ranges of floodplain inputs
+
+```{r geochronology table, echo=FALSE}
+geochronology2 <- geochronology %>%
+  select('Core', 'unreactive_d13C_min','reactive_d13C')
+
+knitr::kable(geochronology2,
+             col.name=c('Core ID', 'Unreactive d13C', 'Reactive d13C'))
+```
+
+The floodplain is located near intensively managed land. Upstream agriculture has included row-crop (corn-soybean, among others) rotations for at least the past 150 years, that have likely entered the alluvial system. Corn, a $\textrm{C}_4$ plant is isotopically distinct, with $\delta^{13}\textrm{C} \approx -10 \textrm{ to } -13‰$. **Unreactive C inputs are consistent with an alluvial mixture of $\textrm{C}_3+\textrm{C}_4$ OC.**
+
+On the other hand, the old-growth forest located above the floodplain is dominated by $\textrm{C}_3$ plant sources, with $\delta^{13}\textrm{C} \approx -25 \textrm{ to } -35 ‰$. **Reactive C inputs are consistent with local ecosystem $\textrm{C}_3$ OC.**
+
+### Carbon budgets for all cores in the floodplain
+
+#### Core01C
+
+
+![Figure 5](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core01C.png)
+
+#### Core05C
+
+![Figure 6](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core05C.png)
+
+#### Core07C
+
+![Figure 7](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core07C.png)
+
+#### Core09C
+
+![Figure 8](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core09C.png)
+
+#### Core11C
+
+![Figure 9](C:\Users\annie\OneDrive - Northwestern University\AP Floodplain\AnnieEdwards_Data\C_budgets\C_budgets_per_core\C_budget_core11C.png)
+
+**Figures 5-9.** Modelled OC flux for all 5 floodplain cores with alluvial and ecosystem inputs, demonstrating the **preferential oxidation of the more reactive C from the local ecosystem, and subsequent long-term burial of unreactive, alluvially inputted OC.**
