@@ -65,7 +65,7 @@ Begin with a two-component mixture (the reactive and unreactive components of or
 
 $$
 \begin{align}
-\delta^{13}\textrm{C}_{\textrm{floodplain}}\cdot\textrm{%C}_\textrm{floodplain}&=\delta^{13}\textrm{C}_{\textrm{reactive}}\cdot\textrm{%C}_\textrm{reactive}+\delta^{13}\textrm{C}_{\textrm{unreactive}}\cdot\textrm{%C}_\textrm{unreactive} \tag{1}\\
+\delta^{13}\textrm{C}_{ \textrm{floodplain}}\cdot\textrm{%C}_\textrm{floodplain}&=\delta^{13}\textrm{C}_{ \textrm{reactive}}\cdot\textrm{%C}_\textrm{reactive}+\delta^{13}\textrm{C}_{ \textrm{unreactive}}\cdot\textrm{%C}_\textrm{unreactive} \tag{1}\\
 \textrm{%C}_\textrm{floodplain}&=\textrm{%C}_\textrm{reactive}+\textrm{%C}_\textrm{unreactive}\tag{2}\\
 \end{align}
 $$
@@ -73,7 +73,7 @@ which can be combined and re-arranged into
 
 $$
 \begin{align}
-\delta^{13}\textrm{C}_{\textrm{f}}\cdot\textrm{%C}_\textrm{f}&=\delta^{13}\textrm{C}_{\textrm{r}}\cdot\textrm{%C}_\textrm{f}+\textrm{%C}_\textrm{r}(\delta^{13}\textrm{C}_{\textrm{u}}-\delta^{13}\textrm{C}_{\textrm{r}}) \tag{3}\\
+\delta^{13}\textrm{C}_{ \textrm{f}}\cdot\textrm{%C}_\textrm{f}&=\delta^{13}\textrm{C}_{ \textrm{r}}\cdot\textrm{%C}_\textrm{f}+\textrm{%C}_\textrm{r}(\delta^{13}\textrm{C}_{ \textrm{u}}-\delta^{13}\textrm{C}_{ \textrm{r}}) \tag{3}\\
 \end{align}
 $$
 By plotting $\delta^13\textrm{C}_\textrm{f}\cdot \textrm{%C}_\textrm{f}$ as a function of $\textrm{%C}_\textrm{f}$, the linear relationship has slope $\delta^13\textrm{C}_\textrm{r}$, and the intercept can be solved for $\delta^13\textrm{C}_\textrm{u}$
@@ -86,9 +86,9 @@ C-burial flux calculations were determined with the following equations:
 
 $$
 \begin{align}
-\textrm{f}_\textrm{reactive}&=\frac{\delta^{13}\textrm{C}_{\textrm{f}}-\delta^{13}\textrm{C}_{\textrm{u}}}{\delta^{13}\textrm{C}_{\textrm{r}}-\delta^{13}\textrm{C}_{\textrm{u}}} \tag{5}\\
+\textrm{f}_\textrm{reactive}&=\frac{ \delta^{13}\textrm{C}_{ \textrm{f}}-\delta^{13}\textrm{C}_{ \textrm{u}}}{ \delta^{13}\textrm{C}_{ \textrm{r}}-\delta^{13}\textrm{C}_{ \textrm{u}}} \tag{5}\\
 \textrm{C}_\textrm{reactive burial flux}&=\textrm{C}_\textrm{burial flux}\cdot\textrm{f}_\textrm{reactive}\tag{6}\\
-\textrm{C}_{\textrm{unreactive burial flux}}&=\textrm{C}_\textrm{buried}\cdot (1-\textrm{f}_\textrm{reactive})\tag{7}
+\textrm{C}_{ \textrm{unreactive burial flux}}&=\textrm{C}_\textrm{buried}\cdot (1-\textrm{f}_\textrm{reactive})\tag{7}
 \end{align}
 $$
 which evaluate the the rate of change of the reactive and unreactive components with depth, given a known accumulation rate which was calculated with fly ash geochronology.
